@@ -13,6 +13,11 @@
 #### Trello board: https://trello.com/b/A6Ods8MA/o-hai-you
 #### Full Entity Relationship Diagram (ERD) & Component Hierarchy Diagram: https://lucid.app/lucidchart/13725dab-3388-44d6-acdf-321834e3e50e/edit?invitationId=inv_058d8578-ba6c-46df-9678-995b15296c9d
 
+![erd](https://i.ibb.co/Z68643z/Screen-Shot-2022-05-05-at-1-21-59-PM.png)
+![hierarchy](https://i.ibb.co/3zwxnMV/Screen-Shot-2022-05-05-at-1-24-41-PM.png)
+
+
+
 ***
 
 ### ***Technologies Used***

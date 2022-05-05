@@ -8,7 +8,7 @@
 ***
 
 ### ***Description***
-#### Ever wanted to learn Japanese for free but can't figure out what website or app to use to help you in your language journey? Then try out O-Hai-You! O-Hai-You! is an application you can use to train your japanese skills. Learn Japanese in just minutes every day with O-Hai-You! provided lessons. Whether you're a beginner starting with the basics or looking to practice your reading, writing, and speaking, O-Hai-You is just for you! 
+#### Ever wanted to learn Japanese for free but can't figure out what website or app to use to help you in your language journey? Then try out O-Hai-You! O-Hai-You! is an application you can use to train your japanese skills. Learn Japanese in just minutes every day with O-Hai-You! provided lessons and you also have the ability to create sets of flashcards to help you in your language learning journey. Whether you're a beginner starting with the basics or looking to practice your reading, writing, and speaking, O-Hai-You is just for you! 
 
 #### Trello board: https://trello.com/b/A6Ods8MA/o-hai-you
 #### Full Entity Relationship Diagram (ERD) & Component Hierarchy Diagram: https://lucid.app/lucidchart/13725dab-3388-44d6-acdf-321834e3e50e/edit?invitationId=inv_058d8578-ba6c-46df-9678-995b15296c9d

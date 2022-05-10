@@ -21,10 +21,10 @@ export default function MainContainer() {
             let iconName;
             let rn = route.name;
 
-            if ((rn = lessonName)) {
+            if (rn === lessonName) {
               iconName = focused ? "home" : "home-outline";
-            } else if ((rn = profileName)) {
-              iconName = focused ? "list" : "list-outline";
+            } else if (rn === profileName) {
+              iconName = focused ? "ios-person" : "ios-person-outline";
             }
 
             return <IonIcons name={iconName} size={size} color={color} />;

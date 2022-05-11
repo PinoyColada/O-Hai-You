@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MainContainer from "./app/MainContainer";
+import LoginScreen from "./app/navigation/components/LogInScreen";
 
 export default function App() {
   const [authenticated, toggleAuthenticated] = useState(false);
@@ -16,17 +18,17 @@ export default function App() {
   const handleLogOut = () => {
     setUser(null);
     toggleAuthenticated(false);
-    localStorage.clear();
+    AsyncStorage.clear();
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      checkToken();
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     checkToken();
+  //   }
+  // }, []);
 
-  return <MainContainer />;
+  return <LoginScreen />;
 }
 
 const styles = StyleSheet.create({

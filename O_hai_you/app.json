@@ -28,6 +28,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "A Japanese language-focused mobile application where users can learn and practice Japanese vocabulary, grammar, and pronunciation.",
+    "githubUrl": "https://github.com/PinoyColada/O-hai-you-front-end"
   }
 }

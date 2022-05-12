@@ -28,7 +28,7 @@ export default function App() {
   //   }
   // }, []);
 
-  return <LoginScreen />;
+  return <MainContainer />;
 }
 
 const styles = StyleSheet.create({

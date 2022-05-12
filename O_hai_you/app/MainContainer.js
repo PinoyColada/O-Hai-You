@@ -5,9 +5,11 @@ import IonIcons from "react-native-vector-icons/Ionicons";
 
 import LessonScreen from "./navigation/components/LessonScreen";
 import ProfileScreen from "./navigation/components/ProfileScreen";
+import TranslatorScreen from "./navigation/components/TranslatorScreen";
 
 const lessonName = "Lesson";
 const profileName = "Profile";
+const translatorName = "Translator";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,8 +27,9 @@ export default function MainContainer() {
               iconName = focused ? "home" : "home-outline";
             } else if (rn === profileName) {
               iconName = focused ? "ios-person" : "ios-person-outline";
+            } else if (rn === translatorName) {
+              iconName = focused ? "language" : "language-outline";
             }
-
             return <IonIcons name={iconName} size={size} color={color} />;
           },
         })}
@@ -39,6 +42,7 @@ export default function MainContainer() {
       >
         <Tab.Screen name={lessonName} component={LessonScreen} />
         <Tab.Screen name={profileName} component={ProfileScreen} />
+        <Tab.Screen name={translatorName} component={TranslatorScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

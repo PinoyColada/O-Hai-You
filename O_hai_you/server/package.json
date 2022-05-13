@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "esm": "^3.2.25",
+    "express": "^4.18.1",
+    "express-jwt": "^7.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.3.4",
+    "navigator": "^1.0.1",
+    "nodemon": "^2.0.16",
+    "shortid": "^2.2.16"
+  }
+}

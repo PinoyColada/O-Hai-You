@@ -2,94 +2,100 @@ import React, { useState } from "react";
 import {
   ImageBackground,
   View,
+  ScrollView,
   Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
   Platform,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import UserInput from "../components/auth/UserInput";
+import SubmitButton from "../components/auth/SubmitButton";
+import axios from "axios";
 
-function LoginScreen() {
+const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [message, setMessage] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const getMessage = () => {
-    const status = isError ? `Error: ` : `Success: `;
-    return status + message;
+  const handleSubmit = async () => {
+    setLoading(true);
+    if (!username || !password) {
+      alert("All fields are required");
+      setLoading(false);
+      return;
+    }
+    try {
+      const { data } = await axios.post("http://localhost:8000/api/signin", {
+        username,
+        email,
+        password,
+      });
+      setLoading(false);
+      console.log("SIGN IN SUCCESS => ", data);
+      alert("Sign in successful");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
-    <ImageBackground
-      source={require("../assets/background_welcome_page.jpeg")}
-      style={styles.image}
+    <KeyboardAwareScrollView
+      contentCotainerStyle={{
+        flex: 1,
+        justifyContent: "center",
+      }}
     >
-      <View style={styles.card}>
-        <Text style={styles.heading}>{isLogin ? "Login" : "Signup"}</Text>
-        <View style={styles.form}>
-          <View style={styles.inputs}>
-            <TextInput
-              style={styles.input}
-              placeholder="User Name"
-              onChangeText={setUsername}
-            ></TextInput>
-            {!isLogin && (
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                autoCapitalize="none"
-                onChangeText={setEmail}
-              ></TextInput>
-            )}
-            {!isLogin && (
-              <TextInput
-                style={styles.input}
-                placeholder="First Name"
-                onChangeText={setFirstName}
-              ></TextInput>
-            )}
-            {!isLogin && (
-              <TextInput
-                style={styles.input}
-                placeholder="Last Name"
-                onChangeText={setLastName}
-              ></TextInput>
-            )}
-            <TextInput
-              secureTextEntry={true}
-              style={styles.input}
-              placeholder="Password"
-              onChangeText={setPassword}
-            ></TextInput>
-            <Text
-              style={[styles.message, { color: isError ? "red" : "green" }]}
-            >
-              {message ? getMessage() : null}
+      <ImageBackground
+        source={require("../assets/background_welcome_page.jpeg")}
+        style={styles.image}
+      >
+        <View style={{ marginVertical: 100 }}>
+          <CircleLogo />
+          <Text title center>
+            Sign In
+          </Text>
+
+          <UserInput
+            name="EMAIL"
+            value={username}
+            setValue={setUsername}
+            autoCompleteType="email"
+            keyboardType="email-address"
+          />
+          <UserInput
+            name="PASSWORD"
+            value={password}
+            setValue={setPassword}
+            secureTextEntry={true}
+            autoComplteType="password"
+          />
+
+          <SubmitButton
+            title="Sign In"
+            handleSubmit={handleSubmit}
+            loading={loading}
+          />
+
+          <Text small center>
+            Not yet registered?{" "}
+            <Text onPress={() => navigation.navigate("Signup")} color="#ff2222">
+              Sign Up
             </Text>
-            <TouchableOpacity style={styles.button} onPress={onSubmitHandler}>
-              <Text style={styles.buttonText}>
-                {isLogin ? "Log In" : "Register"}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonAlt}
-              onPress={onChangeHandler}
-            >
-              <Text style={styles.buttonAltText}>
-                {isLogin ? "Create Account" : "Back"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          </Text>
+
+          <Text small center color="orange" style={{ marginTop: 10 }}>
+            Forgot Password?
+          </Text>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </KeyboardAwareScrollView>
   );
-}
+};
+
+export default Login;
 
 const styles = StyleSheet.create({
   image: {
@@ -168,5 +174,3 @@ const styles = StyleSheet.create({
     marginVertical: "5%",
   },
 });
-
-export default LoginScreen;

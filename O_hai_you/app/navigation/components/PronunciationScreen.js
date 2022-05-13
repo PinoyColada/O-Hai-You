@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, SafeAreaView, StyleSheet, Button } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Button,
+} from "react-native";
 import { Audio } from "expo-av";
 
 function PronunciationScreen() {

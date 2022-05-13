@@ -11,13 +11,13 @@ import PronunciationScreen from "./navigation/components/PronunciationScreen";
 const lessonName = "Lesson";
 const profileName = "Profile";
 const translatorName = "Translator";
-const pronunciationName = "Prnunciation";
+const pronunciationName = "Pronunciation";
 
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Tab.Navigator
         initialRouteName={lessonName}
         screenOptions={({ route }) => ({

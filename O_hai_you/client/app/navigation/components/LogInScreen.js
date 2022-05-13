@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-import {
-  ImageBackground,
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import UserInput from "../components/auth/UserInput";
-import SubmitButton from "../components/auth/SubmitButton";
+import { ImageBackground, View, Text, StyleSheet } from "react-native";
+import UserInput from "../auth/UserInput";
+import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
+import O_Hai_You from "../auth/O_Hai_You";
 
-const Login = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,11 +18,14 @@ const Login = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post("http://localhost:8000/api/signin", {
-        username,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "http://exp://10.0.0.22:19000/api/signin",
+        {
+          username,
+          email,
+          password,
+        }
+      );
       setLoading(false);
       console.log("SIGN IN SUCCESS => ", data);
       alert("Sign in successful");
@@ -42,60 +36,54 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentCotainerStyle={{
-        flex: 1,
-        justifyContent: "center",
-      }}
+    <ImageBackground
+      source={require("../assets/background_welcome_page.jpeg")}
+      style={styles.image}
     >
-      <ImageBackground
-        source={require("../assets/background_welcome_page.jpeg")}
-        style={styles.image}
-      >
-        <View style={{ marginVertical: 100 }}>
-          <CircleLogo />
-          <Text title center>
-            Sign In
-          </Text>
+      <View style={styles.card}>
+        <O_Hai_You />
+        <Text style={styles.heading}>Sign In</Text>
+        <View style={styles.form}>
+          <View style={styles.inputs}>
+            <UserInput
+              style={styles.input}
+              name="Username"
+              value={username}
+              setValue={setUsername}
+              autoCompleteType="username"
+            />
+            <UserInput
+              style={styles.input}
+              name="Password"
+              value={password}
+              setValue={setPassword}
+              secureTextEntry={true}
+              autoCompleteType="password"
+            />
 
-          <UserInput
-            name="EMAIL"
-            value={username}
-            setValue={setUsername}
-            autoCompleteType="email"
-            keyboardType="email-address"
-          />
-          <UserInput
-            name="PASSWORD"
-            value={password}
-            setValue={setPassword}
-            secureTextEntry={true}
-            autoComplteType="password"
-          />
+            <SubmitButton
+              title="Sign In"
+              handleSubmit={handleSubmit}
+              loading={loading}
+            />
 
-          <SubmitButton
-            title="Sign In"
-            handleSubmit={handleSubmit}
-            loading={loading}
-          />
-
-          <Text small center>
-            Not yet registered?{" "}
-            <Text onPress={() => navigation.navigate("Signup")} color="#ff2222">
-              Sign Up
+            <Text style={styles.message}>
+              Don't have an account?{" "}
+              <Text
+                style={{ color: "#626d9c" }}
+                onPress={() =>
+                  navigation.navigate("Register", { screen: "RegisterScreen" })
+                }
+              >
+                Create one here
+              </Text>
             </Text>
-          </Text>
-
-          <Text small center color="orange" style={{ marginTop: 10 }}>
-            Forgot Password?
-          </Text>
+          </View>
         </View>
-      </ImageBackground>
-    </KeyboardAwareScrollView>
+      </View>
+    </ImageBackground>
   );
 };
-
-export default Login;
 
 const styles = StyleSheet.create({
   image: {
@@ -107,17 +95,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.4)",
     width: "80%",
-    marginTop: "40%",
+    marginTop: "30%",
     borderRadius: 20,
-    maxHeight: 380,
-    paddingBottom: "30%",
+    maxHeight: 540,
+    paddingBottom: "20%",
   },
   heading: {
     fontSize: 30,
     fontWeight: "bold",
-    marginLeft: "10%",
-    marginTop: "5%",
-    marginBottom: "40%",
+    textAlign: "center",
+    marginBottom: "20%",
     color: "black",
   },
   form: {
@@ -140,37 +127,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     minHeight: 40,
   },
-  button: {
-    width: "80%",
-    backgroundColor: "black",
-    height: 40,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "400",
-  },
-  buttonAlt: {
-    width: "80%",
-    borderWidth: 1,
-    height: 40,
-    borderRadius: 50,
-    borderColor: "black",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 5,
-  },
-  buttonAltText: {
-    color: "black",
-    fontSize: 16,
-    fontWeight: "400",
-  },
   message: {
     fontSize: 16,
     marginVertical: "5%",
   },
 });
+
+export default LoginScreen;

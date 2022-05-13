@@ -19,69 +19,6 @@ function LoginScreen() {
   const [message, setMessage] = useState("");
   const [isLogin, setIsLogin] = useState(true);
 
-  const onLoggedIn = (token) => {
-    fetch(`${API_URL}/private`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(async (res) => {
-        try {
-          const jsonRes = await res.json();
-          if (res.status === 200) {
-            setMessage(jsonRes.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const onSubmitHandler = () => {
-    const payload = {
-      username,
-      email,
-      firstName,
-      lastName,
-      password,
-    };
-    fetch(`${API_URL}/${isLogin ? "login" : "signup"}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then(async (res) => {
-        try {
-          const jsonRes = await res.json();
-          if (res.status !== 200) {
-            setIsError(true);
-            setMessage(jsonRes.message);
-          } else {
-            onLoggedIn(jsonRes.token);
-            setIsError(false);
-            setMessage(jsonRes.message);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const onChangeHandler = () => {
-    setIsLogin(!isLogin);
-    setMessage("");
-  };
-
   const getMessage = () => {
     const status = isError ? `Error: ` : `Success: `;
     return status + message;

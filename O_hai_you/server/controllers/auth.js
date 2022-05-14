@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const Set = require("../models/set");
 const jwt = require("jsonwebtoken");
-const { hashPassword, comparePassword } = require("../helpers/auth");
+const { hashPassword, comparePassword } = require("../password_config/auth");
 const nanoid = require("nanoid");
 const expressJwt = require("express-jwt");
 const cloudinary = require("cloudinary");
@@ -89,8 +89,8 @@ exports.signup = async (req, res) => {
 // Get User
 exports.signin = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
     if (!user) {
       return res.json({
         error: "No user found",
@@ -214,6 +214,21 @@ exports.updatePassword = async (req, res) => {
       user.secret = undefined;
       return res.json(user);
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.userProfile = async (req, res) => {
+  try {
+    const profile = await User.findById(req.params.userId).select(
+      "-password -secret"
+    );
+    const sets = await Set.find({ postedBy: req.params.userId }).populate(
+      "postedBy",
+      "_id"
+    );
+    return res.json({ profile, sets });
   } catch (err) {
     console.log(err);
   }

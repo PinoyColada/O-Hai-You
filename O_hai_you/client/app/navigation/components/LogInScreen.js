@@ -18,14 +18,10 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post(
-        "http://exp://10.0.0.22:19000/api/signin",
-        {
-          username,
-          email,
-          password,
-        }
-      );
+      const { data } = await axios.post("http://localhost:8000/api/signin", {
+        username,
+        password,
+      });
       setLoading(false);
       console.log("SIGN IN SUCCESS => ", data);
       alert("Sign in successful");

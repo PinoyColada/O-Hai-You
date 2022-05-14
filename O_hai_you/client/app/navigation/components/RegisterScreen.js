@@ -21,17 +21,15 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post(
-        "http://exp://10.0.0.22:19000/api/signup",
-        {
-          username,
-          firstName,
-          lastName,
-          email,
-          password,
-        }
-      );
+      const { data } = await axios.post("http://localhost:8000/api/signup", {
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+      });
       setLoading(false);
+      console.log("SIGN UP SUCCESS ==>", data);
       alert("Sign up successful");
     } catch (err) {
       console.log(err);

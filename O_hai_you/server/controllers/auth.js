@@ -98,3 +98,32 @@ exports.signin = async (req, res) => {
     return res.status(400).send("Error. Try again.");
   }
 };
+
+// If user forgets password, they have the ability to reset it
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.json({ error: "User not found" });
+  }
+  const resetCode = nanoid(5).toUpperCase();
+  user.resetCode = resetCode;
+  user.save();
+  const emailData = {
+    from: process.env.EMAIL_FROM,
+    to: user.email,
+    subject: "Password reset code",
+    html: `
+      <h4>Enter this code in the app to reset password</h4>
+      <h1 style="color:red;">${resetCode}</h1>
+      `,
+  };
+  try {
+    const data = await sgMail.send(emailData);
+    console.log(data);
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+    res.json({ ok: false });
+  }
+};

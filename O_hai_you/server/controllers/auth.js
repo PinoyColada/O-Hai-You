@@ -23,10 +23,20 @@ exports.requireSignin = expressJwt({
 // Create User
 exports.signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name) {
+    const { username, firstName, lastName, email, password } = req.body;
+    if (!username) {
       return res.json({
-        error: "Name is required",
+        error: "Username is required",
+      });
+    }
+    if (!firstName) {
+      return res.json({
+        error: "First name is required",
+      });
+    }
+    if (!lastName) {
+      return res.json({
+        error: "Last name is required",
       });
     }
     if (!email) {
@@ -40,15 +50,23 @@ exports.signup = async (req, res) => {
       });
     }
     const exist = await User.findOne({ email });
+    const username_exist = await User.findOne({ username });
     if (exist) {
       return res.json({
         error: "Email is taken",
       });
     }
+    if (username_exist) {
+      return res.json({
+        error: "Username is taken",
+      });
+    }
     const hashedPassword = await hashPassword(password);
     try {
       const user = await new User({
-        name,
+        username,
+        firstName,
+        lastName,
         email,
         password: hashedPassword,
       }).save();
@@ -125,5 +143,56 @@ exports.forgotPassword = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.json({ ok: false });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { email, password, resetCode } = req.body;
+    const user = await User.findOne({ email, resetCode });
+    if (!user) {
+      return res.json({ error: "Email or reset code is invalid" });
+    }
+    if (!password || password.length < 6) {
+      return res.json({
+        error: "Password is required and should be 6 characters long",
+      });
+    }
+    const hashedPassword = await hashPassword(password);
+    user.password = hashedPassword;
+    user.resetCode = "";
+    user.save();
+    return res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.uploadImage = async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.body.image, {
+      public_id: nanoid(),
+      resource_type: "jpg",
+    });
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        image: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
+      },
+      { new: true }
+    );
+    return res.json({
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      image: user.image,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };

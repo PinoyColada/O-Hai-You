@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post(`${API}/signin`, {
+      const { data } = await axios.post(`/signin`, {
         username,
         password,
       });

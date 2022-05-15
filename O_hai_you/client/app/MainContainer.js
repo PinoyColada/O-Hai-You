@@ -1,5 +1,4 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
@@ -7,6 +6,9 @@ import LessonScreen from "./navigation/components/LessonScreen";
 import ProfileScreen from "./navigation/components/ProfileScreen";
 import TranslatorScreen from "./navigation/components/TranslatorScreen";
 import PronunciationScreen from "./navigation/components/PronunciationScreen";
+import LoginScreen from "./navigation/components/LogInScreen";
+import RegisterScreen from "./navigation/components/RegisterScreen";
+import { AuthContext } from "./navigation/context/auth";
 
 const lessonName = "Lesson";
 const profileName = "Profile";
@@ -16,39 +18,52 @@ const pronunciationName = "Pronunciation";
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
-  return (
-    <NavigationContainer independent={true}>
-      <Tab.Navigator
-        initialRouteName={lessonName}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
+  const [state, setState] = useContext(AuthContext);
+  const authenticated = state && state.token !== "" && state.user !== null;
 
-            if (rn === lessonName) {
-              iconName = focused ? "home" : "home-outline";
-            } else if (rn === profileName) {
-              iconName = focused ? "ios-person" : "ios-person-outline";
-            } else if (rn === translatorName) {
-              iconName = focused ? "language" : "language-outline";
-            } else if (rn === pronunciationName) {
-              iconName = focused ? "chatbubbles" : "chatbubbles-outline";
-            }
-            return <IonIcons name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOption={{
-          activeTintColor: "tomato",
-          inactiveTintColor: "grey",
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 70 },
-        }}
-      >
-        <Tab.Screen name={lessonName} component={LessonScreen} />
-        <Tab.Screen name={profileName} component={ProfileScreen} />
-        <Tab.Screen name={translatorName} component={TranslatorScreen} />
-        <Tab.Screen name={pronunciationName} component={PronunciationScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+  return (
+    <Tab.Navigator
+      initialRouteName={lessonName}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let rn = route.name;
+
+          if (rn === lessonName) {
+            iconName = focused ? "home" : "home-outline";
+          } else if (rn === profileName) {
+            iconName = focused ? "ios-person" : "ios-person-outline";
+          } else if (rn === translatorName) {
+            iconName = focused ? "language" : "language-outline";
+          } else if (rn === pronunciationName) {
+            iconName = focused ? "chatbubbles" : "chatbubbles-outline";
+          }
+          return <IonIcons name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOption={{
+        activeTintColor: "tomato",
+        inactiveTintColor: "grey",
+        labelStyle: { paddingBottom: 10, fontSize: 10 },
+        style: { padding: 10, height: 70 },
+      }}
+    >
+      {authenticated ? (
+        <>
+          <Tab.Screen name={lessonName} component={LessonScreen} />
+          <Tab.Screen name={profileName} component={ProfileScreen} />
+          <Tab.Screen name={translatorName} component={TranslatorScreen} />
+          <Tab.Screen
+            name={pronunciationName}
+            component={PronunciationScreen}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Log In" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+        </>
+      )}
+    </Tab.Navigator>
   );
 }

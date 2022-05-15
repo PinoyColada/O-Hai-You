@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ImageBackground, View, Text, StyleSheet } from "react-native";
 import UserInput from "../auth/UserInput";
 import SubmitButton from "../auth/SubmitButton";
@@ -7,6 +7,7 @@ import O_Hai_You from "../auth/O_Hai_You";
 import axios from "axios";
 import { API } from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../context/auth";
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useContext(AuthContext);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -24,7 +26,7 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post(`${API}/signup`, {
+      const { data } = await axios.post(`/signup`, {
         username,
         firstName,
         lastName,

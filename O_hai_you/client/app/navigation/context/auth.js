@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { API } from "../config";
+import { API } from "../config";
 // import { useNavigation } from "@react-navigation/native";
 
 const AuthContext = createContext();
@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
   //   const navigation = useNavigation();
 
   //   const token = state && state.token ? state.token : "";
-  //   axios.defaults.baseURL = API;
+  axios.defaults.baseURL = API;
   //   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   //   axios.interceptors.response.use(

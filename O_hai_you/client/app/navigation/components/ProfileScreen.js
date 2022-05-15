@@ -1,5 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Text, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import UserInput from "../auth/UserInput";
 import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
@@ -14,7 +20,10 @@ const Account = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState({
+    url: "https://cdn.pixabay.com/photo/2016/09/08/04/12/programmer-1653351_1280.png",
+    public_id: "",
+  });
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [state, setState] = useContext(AuthContext);
@@ -73,7 +82,12 @@ const Account = ({ navigation }) => {
           {image && image.url ? (
             <Image
               source={{ uri: image.url }}
-              style={{ width: 200, height: 200, marginVertical: 20 }}
+              style={{
+                width: 190,
+                height: 190,
+                borderRadius: 100,
+                marginVertical: 20,
+              }}
             />
           ) : (
             <TouchableOpacity onPress={() => handleUpload()}>
@@ -81,6 +95,19 @@ const Account = ({ navigation }) => {
             </TouchableOpacity>
           )}
         </O_Hai_You>
+
+        {image && image.url ? (
+          <TouchableOpacity>
+            <IonIcons
+              name="image"
+              size={25}
+              style={{ maringTop: -5, marginBottom: 10, alignSelf: "center" }}
+            />
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
+
         <Text style={{ paddingBottom: 10, textAlign: "center" }}>
           {username}
         </Text>

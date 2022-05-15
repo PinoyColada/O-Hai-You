@@ -9,11 +9,13 @@ import PronunciationScreen from "./navigation/components/PronunciationScreen";
 import LoginScreen from "./navigation/components/LogInScreen";
 import RegisterScreen from "./navigation/components/RegisterScreen";
 import { AuthContext } from "./navigation/context/auth";
+import SignOutScreen from "./navigation/components/SignOutScreen";
 
 const lessonName = "Lesson";
 const profileName = "Profile";
 const translatorName = "Translator";
 const pronunciationName = "Pronunciation";
+const signOutName = "Sign Out";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +39,8 @@ export default function MainContainer() {
             iconName = focused ? "language" : "language-outline";
           } else if (rn === pronunciationName) {
             iconName = focused ? "chatbubbles" : "chatbubbles-outline";
+          } else if (rn === signOutName) {
+            iconName = focused ? "exit" : "exit-outline";
           }
           return <IonIcons name={iconName} size={size} color={color} />;
         },
@@ -57,11 +61,12 @@ export default function MainContainer() {
             name={pronunciationName}
             component={PronunciationScreen}
           />
+          <Tab.Screen name={signOutName} component={SignOutScreen} />
         </>
       ) : (
         <>
-          <Stack.Screen name="Log In" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Tab.Screen name="Log In" component={LoginScreen} />
+          <Tab.Screen name="Register" component={RegisterScreen} />
         </>
       )}
     </Tab.Navigator>

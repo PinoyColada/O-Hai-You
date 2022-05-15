@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ImageBackground, View, Text, StyleSheet } from "react-native";
 import UserInput from "../auth/UserInput";
 import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
 import O_Hai_You from "../auth/O_Hai_You";
-import { API } from "../config.js";
+import { API } from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../context/auth";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useContext(AuthContext);
 
   const handleSubmit = async () => {
     setLoading(true);

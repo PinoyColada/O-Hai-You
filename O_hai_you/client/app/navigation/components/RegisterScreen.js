@@ -5,7 +5,7 @@ import SubmitButton from "../auth/SubmitButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import O_Hai_You from "../auth/O_Hai_You";
 import axios from "axios";
-import { API } from "../config.js";
+import { API } from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RegisterScreen = ({ navigation }) => {

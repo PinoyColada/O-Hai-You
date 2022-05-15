@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Text, SafeAreaView } from "react-native";
+import { Text, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import UserInput from "../auth/UserInput";
 import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../context/auth";
 import O_Hai_You from "../auth/O_Hai_You";
+import IonIcons from "react-native-vector-icons/Ionicons";
 
 const Account = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -58,6 +59,8 @@ const Account = ({ navigation }) => {
     }
   };
 
+  const handleUpload = () => {};
+
   return (
     <KeyboardAwareScrollView
       contentCotainerStyle={{
@@ -67,34 +70,62 @@ const Account = ({ navigation }) => {
     >
       <SafeAreaView style={{ marginVertical: 100 }}>
         <O_Hai_You>
-          <Text>Image or Icon</Text>
+          {image && image.url ? (
+            <Image
+              source={{ uri: image.url }}
+              style={{ width: 200, height: 200, marginVertical: 20 }}
+            />
+          ) : (
+            <TouchableOpacity onPress={() => handleUpload()}>
+              <IonIcons name="image" size={100} />
+            </TouchableOpacity>
+          )}
         </O_Hai_You>
-        <Text title center style={{ paddingBottom: 10 }}>
+        <Text style={{ paddingBottom: 10, textAlign: "center" }}>
           {username}
         </Text>
-        <Text medium center style={{ paddingBottom: 10 }}>
+        <Text style={{ paddingBottom: 10, textAlign: "center" }}>
           {firstName} {lastName}
         </Text>
-        <Text medium center style={{ paddingBottom: 50 }}>
-          {email}
-        </Text>
+        <Text style={{ paddingBottom: 50, textAlign: "center" }}>{email}</Text>
 
-        <UserInput
-          name="PASSWORD"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-          autoComplteType="password"
-        />
+        <SafeAreaView style={styles.inputs}>
+          <UserInput
+            style={styles.input}
+            name="New Password"
+            value={password}
+            setValue={setPassword}
+            secureTextEntry={true}
+            autoCompleteType="password"
+          />
 
-        <SubmitButton
-          title="Update Password"
-          handleSubmit={handleSubmit}
-          loading={loading}
-        />
+          <SubmitButton
+            title="Update Password"
+            handleSubmit={handleSubmit}
+            loading={loading}
+          />
+        </SafeAreaView>
       </SafeAreaView>
     </KeyboardAwareScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    width: "80%",
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+    paddingTop: 10,
+    fontSize: 16,
+    minHeight: 40,
+  },
+  inputs: {
+    width: "100%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: "10%",
+  },
+});
 
 export default Account;

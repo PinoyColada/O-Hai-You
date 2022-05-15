@@ -15,7 +15,7 @@ const TranslatorScreen = () => {
         onTranslated={(t) => setResult(t)}
       />
       <TextInput value={value} onChangeText={(t) => setValue(t)} />
-      <Text>{result}</Text>
+      <Text>Japanese:{result}</Text>
     </SafeAreaView>
   );
 };

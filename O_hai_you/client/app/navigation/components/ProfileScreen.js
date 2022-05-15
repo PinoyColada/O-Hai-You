@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, SafeAreaView } from "react-native";
 import UserInput from "../auth/UserInput";
 import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../context/auth";
+import O_Hai_You from "../auth/O_Hai_You";
 
 const Account = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -64,7 +65,10 @@ const Account = ({ navigation }) => {
         justifyContent: "center",
       }}
     >
-      <View style={{ marginVertical: 100 }}>
+      <SafeAreaView style={{ marginVertical: 100 }}>
+        <O_Hai_You>
+          <Text>Image or Icon</Text>
+        </O_Hai_You>
         <Text title center style={{ paddingBottom: 10 }}>
           {username}
         </Text>
@@ -88,7 +92,7 @@ const Account = ({ navigation }) => {
           handleSubmit={handleSubmit}
           loading={loading}
         />
-      </View>
+      </SafeAreaView>
     </KeyboardAwareScrollView>
   );
 };

@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabBar,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
 import LessonScreen from "./navigation/components/LessonScreen";
@@ -65,8 +68,16 @@ export default function MainContainer() {
         </>
       ) : (
         <>
-          <Tab.Screen name="Log In" component={LoginScreen} />
-          <Tab.Screen name="Register" component={RegisterScreen} />
+          <Tab.Screen
+            options={{ tabBarVisible: false }}
+            name="Log In"
+            component={LoginScreen}
+          />
+          <Tab.Screen
+            options={{ tabBarVisible: false }}
+            name="Register"
+            component={RegisterScreen}
+          />
         </>
       )}
     </Tab.Navigator>

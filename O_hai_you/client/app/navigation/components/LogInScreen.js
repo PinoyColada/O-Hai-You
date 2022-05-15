@@ -4,6 +4,8 @@ import UserInput from "../auth/UserInput";
 import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
 import O_Hai_You from "../auth/O_Hai_You";
+import { API } from "../config.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -18,15 +20,23 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post("http://localhost:8000/api/signin", {
+      const { data } = await axios.post(`${API}/signin`, {
         username,
         password,
       });
-      setLoading(false);
-      console.log("SIGN IN SUCCESS => ", data);
-      alert("Sign in successful");
-      navigation.navigate("MainContainer", { screen: "MainContainer" });
+      if (data.error) {
+        alert(data.error);
+        setLoading(false);
+      } else {
+        setState(data);
+        await AsyncStorage.setItem("@auth", JSON.stringify(data));
+        setLoading(false);
+        console.log("SIGN IN SUCCESS => ", data);
+        alert("Sign in successful");
+        navigation.navigate("MainContainer", { screen: "MainContainer" });
+      }
     } catch (err) {
+      alert("Signup failed. Try again.");
       console.log(err);
       setLoading(false);
     }

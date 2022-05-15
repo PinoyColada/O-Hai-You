@@ -5,6 +5,9 @@ import SubmitButton from "../auth/SubmitButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import O_Hai_You from "../auth/O_Hai_You";
 import axios from "axios";
+import { API } from "../config.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -21,17 +24,25 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
     try {
-      const { data } = await axios.post("http://localhost:8000/api/signup", {
+      const { data } = await axios.post(`${API}/signup`, {
         username,
         firstName,
         lastName,
         email,
         password,
       });
-      setLoading(false);
-      console.log("SIGN UP SUCCESS ==>", data);
-      alert("Sign up successful");
+      if (data.error) {
+        alert(data.error);
+        setLoading(false);
+      } else {
+        setState(data);
+        await AsyncStorage.setItem("@auth", JSON.stringify(data));
+        setLoading(false);
+        console.log("SIGN UP SUCCESS => ", data);
+        alert("Sign up successful");
+      }
     } catch (err) {
+      alert("Sign up failed. Try again.");
       console.log(err);
       setLoading(false);
     }

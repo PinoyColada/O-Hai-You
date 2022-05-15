@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
         setLoading(false);
         console.log("SIGN IN SUCCESS => ", data);
         alert("Sign in successful");
-        navigation.navigate("MainContainer", { screen: "MainContainer" });
+        navigation.navigate("Lesson");
       }
     } catch (err) {
       alert("Signup failed. Try again.");

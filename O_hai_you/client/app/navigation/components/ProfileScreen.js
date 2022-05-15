@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View } from "react-native";
+import { AuthContext } from "../context/auth";
 
 function ProfileScreen({ navigation }) {
+  const [state, setState] = useContext(AuthContext);
+  const { username, email } = state.user;
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text
@@ -10,6 +14,8 @@ function ProfileScreen({ navigation }) {
       >
         Profile Screen
       </Text>
+      <Text>{username}</Text>
+      <Text>{email}</Text>
     </View>
   );
 }

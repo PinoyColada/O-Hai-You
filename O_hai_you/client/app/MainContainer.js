@@ -54,13 +54,13 @@ export default function MainContainer() {
     >
       {authenticated ? (
         <>
-          <Tab.Screen name={lessonName} component={LessonScreen} />
-          <Tab.Screen name={profileName} component={ProfileScreen} />
-          <Tab.Screen name={translatorName} component={TranslatorScreen} />
           <Tab.Screen
             name={pronunciationName}
             component={PronunciationScreen}
           />
+          <Tab.Screen name={translatorName} component={TranslatorScreen} />
+          <Tab.Screen name={lessonName} component={LessonScreen} />
+          <Tab.Screen name={profileName} component={ProfileScreen} />
           <Tab.Screen name={signOutName} component={SignOutScreen} />
         </>
       ) : (

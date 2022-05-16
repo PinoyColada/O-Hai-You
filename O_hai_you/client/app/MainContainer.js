@@ -8,13 +8,14 @@ import TranslatorScreen from "./navigation/components/TranslatorScreen";
 import PronunciationScreen from "./navigation/components/PronunciationScreen";
 import LoginScreen from "./navigation/components/LogInScreen";
 import RegisterScreen from "./navigation/components/RegisterScreen";
+import MySetsScreen from "./navigation/components/MySetsScreen";
 import { AuthContext } from "./navigation/context/auth";
 
 const lessonName = "Lesson";
 const profileName = "Profile";
 const translatorName = "Translator";
 const pronunciationName = "Pronunciation";
-const signOutName = "Sign Out";
+const mySetsName = "My Sets";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,10 @@ export default function MainContainer() {
             iconName = focused ? "language" : "language-outline";
           } else if (rn === pronunciationName) {
             iconName = focused ? "chatbubbles" : "chatbubbles-outline";
+          } else if (rn === mySetsName) {
+            iconName = focused
+              ? "file-tray-stacked"
+              : "file-tray-stacked-outline";
           }
           return <IonIcons name={iconName} size={size} color={color} />;
         },
@@ -58,6 +63,7 @@ export default function MainContainer() {
           <Tab.Screen name={translatorName} component={TranslatorScreen} />
           <Tab.Screen name={lessonName} component={LessonScreen} />
           <Tab.Screen name={profileName} component={ProfileScreen} />
+          <Tab.Screen name={mySetsName} component={MySetsScreen} />
         </>
       ) : (
         <>

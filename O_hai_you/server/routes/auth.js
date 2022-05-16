@@ -11,6 +11,7 @@ const {
   requireSignin,
   updatePassword,
   userProfile,
+  deleteProfile,
 } = require("../controllers/auth");
 
 router.post("/signup", signup);
@@ -20,5 +21,6 @@ router.post("/reset-password", resetPassword);
 router.post("/upload-image", requireSignin, uploadImage);
 router.post("/update-password", requireSignin, updatePassword);
 router.get("/user-profile/:userId", userProfile);
+router.delete("/delete", requireSignin, controller.delete);
 
 module.exports = router;

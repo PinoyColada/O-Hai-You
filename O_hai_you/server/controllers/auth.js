@@ -231,3 +231,13 @@ exports.userProfile = async (req, res) => {
     console.log(err);
   }
 };
+
+// Delete a user
+exports.deleteProfile = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.user_id);
+    res.json({ msg: "User has been deleted!" });
+  } catch (err) {
+    console.log(err);
+  }
+};

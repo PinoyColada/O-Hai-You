@@ -43,9 +43,35 @@ const getAllUserSets = async (req, res) => {
 const getAllSetFlashCards = async (req, res) => {
   try {
     const setFlashCards = await FlashCard.find({
-      user_id: req.params.set_id,
+      set_id: req.params.set_id,
     }).populate("set_id");
     return res.status(200).json({ setFlashCards });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateSet = async (req, res) => {
+  try {
+    const set = await Set.findByIdAndUpdate(req.params.set_id, req.body, {
+      new: true,
+    });
+    res.json(set);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateFlashCard = async (req, res) => {
+  try {
+    const flashCard = await FlashCard.findByIdAndUpdate(
+      req.params.flashcard_id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    res.json(flashCard);
   } catch (error) {
     throw error;
   }
@@ -54,4 +80,8 @@ const getAllSetFlashCards = async (req, res) => {
 module.exports = {
   createSet,
   createFlashCard,
+  getAllUserSets,
+  getAllSetFlashCards,
+  updateSet,
+  updateFlashCard,
 };

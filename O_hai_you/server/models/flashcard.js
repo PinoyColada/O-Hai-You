@@ -12,9 +12,13 @@ const flashCardSchema = new mongoose.Schema(
       public_id: "",
       url: "",
     },
-    createdIn: {
+    set_id: {
       type: ObjectId,
       ref: "Set",
+    },
+    user_id: {
+      type: ObjectId,
+      ref: "User",
     },
   },
   { timestamps: true }

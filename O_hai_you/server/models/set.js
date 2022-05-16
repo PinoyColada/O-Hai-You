@@ -13,7 +13,7 @@ const setSchema = new mongoose.Schema(
       url: "",
     },
     urlPreview: {},
-    postedBy: {
+    user_id: {
       type: ObjectId,
       ref: "User",
     },

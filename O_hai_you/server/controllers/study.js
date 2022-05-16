@@ -2,22 +2,30 @@ const Set = require("../models/set");
 const FlashCard = require("../models/flashcard");
 
 const createSet = async (req, res) => {
+  const userId = parseInt(req.params.user_id);
   try {
-    const newSet = await new Set(req.body);
-    await newSet.save();
-    return res.status(201).json({ newSet });
+    let buildBody = {
+      user_id: userId,
+      ...req.body,
+    };
+    const createSet = await new Set(buildBody);
+    res.send(createSet);
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    throw error;
   }
 };
 
 const createFlashCard = async (req, res) => {
+  const setId = parseInt(req.params.set_id);
   try {
-    const newCard = await new FlashCard(req.body);
-    await newCard.save();
-    return res.status(201).json({ newCard });
+    let buildBody = {
+      set_id: setId,
+      ...req.body,
+    };
+    const createCard = await new FlashCard(buildBody);
+    res.send(createCard);
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    throw error;
   }
 };
 

@@ -14,14 +14,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../context/auth";
 import O_Hai_You from "../auth/O_Hai_You";
 import IonIcons from "react-native-vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
 
 const Account = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [uploadImage, setUploadImage] = useState("");
   const [image, setImage] = useState({
-    url: "https://cdn.pixabay.com/photo/2016/09/08/04/12/programmer-1653351_1280.png",
+    url: "",
     public_id: "",
   });
   const [password, setPassword] = useState("");
@@ -68,7 +70,30 @@ const Account = ({ navigation }) => {
     }
   };
 
-  const handleUpload = () => {};
+  // process for the user to upload an image from their device to set it as their profile pic
+  const handleUpload = async () => {
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Camera access is required");
+      return;
+    }
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true,
+    });
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+    // save to state for preview
+    let base64Image = `data:image/jpg;base64,${pickerResult.base64}`;
+    setUploadImage(base64Image);
+    // send to backend for uploading to cloudinary
+    const { data } = await axios.post("/upload-image", {
+      image: base64Image,
+    });
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -82,6 +107,16 @@ const Account = ({ navigation }) => {
           {image && image.url ? (
             <Image
               source={{ uri: image.url }}
+              style={{
+                width: 190,
+                height: 190,
+                borderRadius: 100,
+                marginVertical: 20,
+              }}
+            />
+          ) : uploadImage ? (
+            <Image
+              source={{ uri: uploadImage }}
               style={{
                 width: 190,
                 height: 190,

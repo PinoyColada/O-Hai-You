@@ -9,7 +9,6 @@ import PronunciationScreen from "./navigation/components/PronunciationScreen";
 import LoginScreen from "./navigation/components/LogInScreen";
 import RegisterScreen from "./navigation/components/RegisterScreen";
 import { AuthContext } from "./navigation/context/auth";
-import SignOutScreen from "./navigation/components/SignOutScreen";
 
 const lessonName = "Lesson";
 const profileName = "Profile";
@@ -39,8 +38,6 @@ export default function MainContainer() {
             iconName = focused ? "language" : "language-outline";
           } else if (rn === pronunciationName) {
             iconName = focused ? "chatbubbles" : "chatbubbles-outline";
-          } else if (rn === signOutName) {
-            iconName = focused ? "exit" : "exit-outline";
           }
           return <IonIcons name={iconName} size={size} color={color} />;
         },
@@ -61,7 +58,6 @@ export default function MainContainer() {
           <Tab.Screen name={translatorName} component={TranslatorScreen} />
           <Tab.Screen name={lessonName} component={LessonScreen} />
           <Tab.Screen name={profileName} component={ProfileScreen} />
-          <Tab.Screen name={signOutName} component={SignOutScreen} />
         </>
       ) : (
         <>

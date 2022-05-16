@@ -43,32 +43,26 @@ const Account = ({ navigation }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    if (!username || !password) {
-      alert("All fields are required");
-      setLoading(false);
-      return;
-    }
     try {
-      const { data } = await axios.post(`/signin`, {
-        username,
-        password,
-      });
+      const { data } = await axios.post("/update-password", { password });
       if (data.error) {
         alert(data.error);
         setLoading(false);
       } else {
-        setState(data);
-        await AsyncStorage.setItem("@auth", JSON.stringify(data));
+        alert("Password updated successfully");
+        setPassword("");
         setLoading(false);
-        console.log("SIGN IN SUCCESS => ", data);
-        alert("Sign in successful");
-        navigation.navigate("Lesson");
       }
     } catch (err) {
-      alert("Signup failed. Try again.");
+      alert("Password update failed. Try again.");
       console.log(err);
       setLoading(false);
     }
+  };
+
+  const signOut = async () => {
+    setState({ token: "", user: null });
+    await AsyncStorage.removeItem("@auth");
   };
 
   // process for the user to upload an image from their device to set it as their profile pic
@@ -173,6 +167,12 @@ const Account = ({ navigation }) => {
           <SubmitButton
             title="Update Password"
             handleSubmit={handleSubmit}
+            loading={loading}
+          />
+
+          <SubmitButton
+            title="Sign out"
+            handleSubmit={signOut}
             loading={loading}
           />
         </SafeAreaView>

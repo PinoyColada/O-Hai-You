@@ -202,7 +202,7 @@ exports.updatePassword = async (req, res) => {
     const { password } = req.body;
     if (password && password.length < 6) {
       return res.json({
-        error: "Password is required and should be min 6 characters long",
+        error: "Password is required and should at least be 6 characters long",
       });
     } else {
       const hashedPassword = await hashPassword(password);

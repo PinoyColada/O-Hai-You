@@ -21,6 +21,6 @@ router.post("/reset-password", resetPassword);
 router.post("/upload-image", requireSignin, uploadImage);
 router.post("/update-password", requireSignin, updatePassword);
 router.get("/user-profile/:userId", userProfile);
-router.delete("/delete", requireSignin, controller.delete);
+router.delete("/delete/:userId", requireSignin, deleteProfile);
 
 module.exports = router;

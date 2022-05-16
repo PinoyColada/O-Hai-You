@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+let ObjectID = require("bson-objectid");
 import {
   Text,
   SafeAreaView,
@@ -98,6 +99,16 @@ const Account = ({ navigation }) => {
     alert("Profile image saved");
   };
 
+  const handleDelete = async () => {
+    try {
+      const { data } = await axios.delete(
+        `/delete/${ObjectID(state.user._id)}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <KeyboardAwareScrollView
       contentCotainerStyle={{
@@ -175,6 +186,11 @@ const Account = ({ navigation }) => {
           <SubmitButton
             title="Sign out"
             handleSubmit={signOut}
+            loading={loading}
+          />
+          <SubmitButton
+            title="Delete User"
+            handleSubmit={handleDelete}
             loading={loading}
           />
         </SafeAreaView>

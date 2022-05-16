@@ -37,6 +37,7 @@ const Account = ({ navigation }) => {
       setFirstName(firstName);
       setLastName(lastName);
       setEmail(email);
+      setImage(image);
     }
   }, [state]);
 
@@ -93,6 +94,14 @@ const Account = ({ navigation }) => {
     const { data } = await axios.post("/upload-image", {
       image: base64Image,
     });
+    // update async storage
+    const as = JSON.parse(await AsyncStorage.getItem("@auth"));
+    as.user = data;
+    await AsyncStorage.setItem("@auth", JSON.stringify(as));
+    // update context
+    setState({ ...state, user: data });
+    setImage(data.image);
+    alert("Profile image saved");
   };
 
   return (
@@ -132,7 +141,7 @@ const Account = ({ navigation }) => {
         </O_Hai_You>
 
         {image && image.url ? (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleUpload()}>
             <IonIcons
               name="image"
               size={25}

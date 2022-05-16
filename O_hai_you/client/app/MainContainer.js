@@ -1,8 +1,5 @@
 import React, { useContext } from "react";
-import {
-  BottomTabBar,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
 import LessonScreen from "./navigation/components/LessonScreen";

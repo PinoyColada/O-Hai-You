@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Set = require("../models/set");
 const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../password_config/auth");
-const nanoid = require("nanoid");
+const { nanoid } = require("nanoid");
 const expressJwt = require("express-jwt");
 const cloudinary = require("cloudinary");
 
@@ -189,7 +189,6 @@ exports.uploadImage = async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      role: user.role,
       image: user.image,
     });
   } catch (err) {

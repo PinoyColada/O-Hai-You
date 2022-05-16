@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, ObjectId } = mongoose;
 
-const flashCardSchema = new mongoose.Schema(
+const flashCardSchema = new Schema(
   {
     question: {
       type: String,

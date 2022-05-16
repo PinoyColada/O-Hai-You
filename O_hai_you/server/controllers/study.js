@@ -1,35 +1,28 @@
 const Set = require("../models/set");
 const FlashCard = require("../models/flashcard");
 
-const createSet = async (req, res) => {
-  const userId = parseInt(req.params.user_id);
+exports.createSet = async (req, res) => {
   try {
-    let buildBody = {
-      user_id: userId,
-      ...req.body,
-    };
-    const createSet = await new Set(buildBody);
-    res.send(createSet);
+    const set = await new Set({ ...req.body, user_id: req.user._id }).save();
+    res.send(set);
   } catch (error) {
     throw error;
   }
 };
 
-const createFlashCard = async (req, res) => {
-  const setId = parseInt(req.params.set_id);
+exports.createFlashCard = async (req, res) => {
   try {
-    let buildBody = {
-      set_id: setId,
+    const flashCard = await new FlashCard({
       ...req.body,
-    };
-    const createCard = await new FlashCard(buildBody);
-    res.send(createCard);
+      set_id: req.set._id,
+    }).save();
+    res.send(flashCard);
   } catch (error) {
     throw error;
   }
 };
 
-const getAllUserSets = async (req, res) => {
+exports.getAllUserSets = async (req, res) => {
   try {
     const userSets = await Set.find({
       user_id: req.params.user_id,
@@ -40,7 +33,7 @@ const getAllUserSets = async (req, res) => {
   }
 };
 
-const getAllSetFlashCards = async (req, res) => {
+exports.getAllSetFlashCards = async (req, res) => {
   try {
     const setFlashCards = await FlashCard.find({
       set_id: req.params.set_id,
@@ -51,7 +44,7 @@ const getAllSetFlashCards = async (req, res) => {
   }
 };
 
-const updateSet = async (req, res) => {
+exports.updateSet = async (req, res) => {
   try {
     const set = await Set.findByIdAndUpdate(req.params.set_id, req.body, {
       new: true,
@@ -62,7 +55,7 @@ const updateSet = async (req, res) => {
   }
 };
 
-const updateFlashCard = async (req, res) => {
+exports.updateFlashCard = async (req, res) => {
   try {
     const flashCard = await FlashCard.findByIdAndUpdate(
       req.params.flashcard_id,
@@ -77,7 +70,7 @@ const updateFlashCard = async (req, res) => {
   }
 };
 
-const deleteSet = async (req, res) => {
+exports.deleteSet = async (req, res) => {
   try {
     const setId = req.params.set_id;
     const deleted = await Set.findByIdAndDelete(setId);
@@ -87,7 +80,7 @@ const deleteSet = async (req, res) => {
   }
 };
 
-const deleteFlashCard = async (req, res) => {
+exports.deleteFlashCard = async (req, res) => {
   try {
     const flashcardId = req.params.flashcard_id;
     const deleted = await FlashCard.findByIdAndDelete(flashcardId);
@@ -95,15 +88,4 @@ const deleteFlashCard = async (req, res) => {
   } catch (error) {
     throw error;
   }
-};
-
-module.exports = {
-  createSet,
-  createFlashCard,
-  getAllUserSets,
-  getAllSetFlashCards,
-  updateSet,
-  updateFlashCard,
-  deleteSet,
-  deleteFlashCard,
 };

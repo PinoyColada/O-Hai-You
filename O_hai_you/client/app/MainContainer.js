@@ -15,7 +15,7 @@ const lessonName = "Lesson";
 const profileName = "Profile";
 const translatorName = "Translator";
 const pronunciationName = "Pronunciation";
-const mySetsName = "My Sets";
+const mySetsName = "Create Set";
 
 const Tab = createBottomTabNavigator();
 

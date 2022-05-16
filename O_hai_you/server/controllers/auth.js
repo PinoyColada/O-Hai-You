@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const Set = require("../models/set");
 const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../password_config/auth");
 const { nanoid } = require("nanoid");

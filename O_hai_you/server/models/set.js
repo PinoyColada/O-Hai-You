@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 const { Schema, ObjectId } = mongoose;
 
-const setSchema = new mongoose.Schema(
+const setSchema = new Schema(
   {
     title: {
       type: String,
       trim: true,
       required: true,
     },
-    image: {
-      public_id: "",
-      url: "",
+    description: {
+      type: String,
+      trim: true,
+      required: true,
     },
-    urlPreview: {},
     user_id: {
       type: ObjectId,
       ref: "User",

@@ -13,7 +13,9 @@ const {
   deleteFlashCard,
 } = require("../controllers/study");
 
-router.post("/create-set", createSet);
+const { requireSignin } = require("../controllers/auth");
+
+router.post("/create-set", requireSignin, createSet);
 router.post("/create-flashcard", createFlashCard);
 router.get("/sets/:userId", getAllUserSets);
 router.get("/flashcards/:setId", getAllSetFlashCards);

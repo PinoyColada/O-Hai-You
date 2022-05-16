@@ -24,9 +24,7 @@ exports.createFlashCard = async (req, res) => {
 
 exports.getAllUserSets = async (req, res) => {
   try {
-    const userSets = await Set.find({
-      user_id: req.params.user_id,
-    }).populate("user_id");
+    const userSets = await Set.find();
     return res.status(200).json({ userSets });
   } catch (error) {
     throw error;

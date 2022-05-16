@@ -16,8 +16,8 @@ const {
 const { requireSignin } = require("../controllers/auth");
 
 router.post("/create-set", requireSignin, createSet);
-router.post("/create-flashcard", createFlashCard);
-router.get("/sets/:userId", getAllUserSets);
+router.post("/create-flashcard", requireSignin, createFlashCard);
+router.get("/sets", getAllUserSets);
 router.get("/flashcards/:setId", getAllSetFlashCards);
 router.put("/:setId", updateSet);
 router.put("/:flashcardId", updateFlashCard);

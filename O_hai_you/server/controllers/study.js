@@ -77,6 +77,26 @@ const updateFlashCard = async (req, res) => {
   }
 };
 
+const deleteSet = async (req, res) => {
+  try {
+    const setId = req.params.set_id;
+    const deleted = await Set.findByIdAndDelete(setId);
+    return res.status(200).status(deleted);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteFlashCard = async (req, res) => {
+  try {
+    const flashcardId = req.params.flashcard_id;
+    const deleted = await FlashCard.findByIdAndDelete(flashcardId);
+    return res.status(200).status(deleted);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createSet,
   createFlashCard,
@@ -84,4 +104,6 @@ module.exports = {
   getAllSetFlashCards,
   updateSet,
   updateFlashCard,
+  deleteSet,
+  deleteFlashCard,
 };

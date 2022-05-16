@@ -2,23 +2,22 @@ import React, { useState, useContext } from "react";
 import { Text, SafeAreaView, ScrollView, TextInput, View } from "react-native";
 import SubmitButton from "../auth/SubmitButton";
 import axios from "axios";
-import { SetContext } from "../context/set";
 
-const PostSet = ({ navigation }) => {
+const PostFlashCard = ({ navigation }) => {
   const [sets, setSets] = useContext(SetContext);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!title || !description) {
-      alert("Please enter a title and description");
+    if (!question || !answer) {
+      alert("Please enter a question and answer");
       return;
     }
     try {
       const { data } = await axios.post("/create-flash", {
-        title,
-        description,
+        question,
+        setAnswer,
       });
       console.log("data =>", data);
       setSets([data, ...sets]);
@@ -42,12 +41,12 @@ const PostSet = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text style={{ paddingTop: 30 }}>Create A Set</Text>
+      <Text style={{ paddingTop: 30 }}>Create A FlashCard</Text>
 
       <TextInput
-        value={title}
+        value={question}
         onChangeText={(text) => setTitle(text)}
-        placeholder="Title of the Set"
+        placeholder="The question goes here"
         autoCapitalize="sentences"
         style={{
           borderWidth: 1,
@@ -61,9 +60,9 @@ const PostSet = ({ navigation }) => {
       />
 
       <TextInput
-        value={description}
+        value={answer}
         onChangeText={(text) => handleChange(text)}
-        placeholder="Short description of the set"
+        placeholder="Your answer of the question here"
         autoCapitalize="none"
         autoCorrect={false}
         selectTextOnFocus={true}
@@ -89,4 +88,4 @@ const PostSet = ({ navigation }) => {
   );
 };
 
-export default PostSet;
+export default PostFlashCard;

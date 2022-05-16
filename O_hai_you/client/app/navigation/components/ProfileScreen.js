@@ -147,12 +147,14 @@ const Account = ({ navigation }) => {
         )}
 
         <Text style={{ paddingBottom: 10, textAlign: "center" }}>
-          {username}
+          Username: {username}
         </Text>
         <Text style={{ paddingBottom: 10, textAlign: "center" }}>
-          {firstName} {lastName}
+          Name: {firstName} {lastName}
         </Text>
-        <Text style={{ paddingBottom: 50, textAlign: "center" }}>{email}</Text>
+        <Text style={{ paddingBottom: 50, textAlign: "center" }}>
+          Email: {email}
+        </Text>
 
         <SafeAreaView style={styles.inputs}>
           <UserInput

@@ -62,8 +62,8 @@ export default function MainContainer() {
           />
           <Tab.Screen name={translatorName} component={TranslatorScreen} />
           <Tab.Screen name={lessonName} component={LessonScreen} />
-          <Tab.Screen name={profileName} component={ProfileScreen} />
           <Tab.Screen name={mySetsName} component={MySetsScreen} />
+          <Tab.Screen name={profileName} component={ProfileScreen} />
         </>
       ) : (
         <>
